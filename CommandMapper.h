@@ -16,11 +16,20 @@ class CommandMapper {
   private:
     MotorController& _motor;
     struct Command {
-      char direction;
-      void (MotorController::*directionMethod)(boolean);
-      void (MotorController::*speedMethod)(int);
+        const char* direction;
+        void (MotorController::*directionMethod)(int);
+        void (MotorController::*speedMethod)(int);
+
+        // Default constructor
+        Command() : direction(nullptr), directionMethod(nullptr), speedMethod(nullptr) {}
+
+        // Parameterized constructor
+        Command(const char* dir, void (MotorController::*dirMethod)(int), void (MotorController::*spdMethod)(int))
+            : direction(dir), directionMethod(dirMethod), speedMethod(spdMethod) {}
     };
-    Command _commands[4];
+
+
+    Command _commands[5];
 };
 
 #endif

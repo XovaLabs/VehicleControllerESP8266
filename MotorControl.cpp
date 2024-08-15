@@ -1,4 +1,4 @@
-// MotorController.cpp
+// MotorControl.cpp
 
 #include "MotorControl.h"
 
@@ -7,7 +7,7 @@ const int MAX_SPEED = 255;
 const int MIN_SPEED = 0;
 const int MAX_STEERING = 255;
 const int MIN_STEERING = 0;
-const int DELAY_TIME = 5;
+const int DELAY_TIME = 0;
 
 MotorController::MotorController(int forwardPin, int reversePin, int leftPin, int rightPin) {
   // Check if pins are valid
