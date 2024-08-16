@@ -2,9 +2,9 @@
 
 CommandMapper::CommandMapper(MotorController& motor) : _motor(motor) {
     // Initialize commands using only the first letter
-    _commands[0] = Command("N", &MotorController::setDirectionForward, nullptr); // forward
-    _commands[1] = Command("S", &MotorController::setDirectionReverse, nullptr); // reverse
-    _commands[2] = Command("W", nullptr, &MotorController::setSteeringLeft); // left
+    _commands[0] = Command("F", &MotorController::setDirectionForward, nullptr); // forward
+    _commands[1] = Command("R", &MotorController::setDirectionReverse, nullptr); // reverse
+    _commands[2] = Command("L", nullptr, &MotorController::setSteeringLeft); // left
     _commands[3] = Command("E", nullptr, &MotorController::setSteeringRight); // right
     _commands[4] = Command("C", &MotorController::setDirectionForward, &MotorController::setSpeed); // stop
 }

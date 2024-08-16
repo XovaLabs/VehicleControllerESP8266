@@ -97,6 +97,9 @@
         var joy2X = document.getElementById("joy2X");
         var joy2Y = document.getElementById("joy2Y");
 
+        var lastJoy1Y = null;
+        var lastJoy2Y = null;
+
         setInterval(function () {
             joy2IinputPosX.value = Joy2.GetPosX();
             joy2InputPosY.value = Joy2.GetPosY();
@@ -120,28 +123,38 @@
         };
 
         function sendJoystickData() {
-            if (socket.readyState === WebSocket.OPEN) {
-                socket.send(JSON.stringify({
-                    joy1: {
-                        xPosition: joy1IinputPosX.value,
-                        yPosition: joy1InputPosY.value,
-                        direction: joy1Direzione.value,
-                        x: joy1X.value,
-                        y: joy1Y.value
-                    },
-                    joy2: {
-                        xPosition: joy2IinputPosX.value,
-                        yPosition: joy2InputPosY.value,
-                        direction: joy2Direzione.value,
-                        x: joy2X.value,
-                        y: joy2Y.value
-                    }
-                }));
+            const currentJoy1Y = parseInt(joy1InputPosY.value);
+            const currentJoy2Y = parseInt(joy2InputPosY.value);
+
+            const significantChangeJoy1Y = lastJoy1Y === null || Math.abs(currentJoy1Y - lastJoy1Y) >= 3;
+            const significantChangeJoy2Y = lastJoy2Y === null || Math.abs(currentJoy2Y - lastJoy2Y) >= 3;
+
+            if (significantChangeJoy1Y || significantChangeJoy2Y) {
+                if (socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify({
+                        joy1: {
+                            xPosition: joy1IinputPosX.value,
+                            yPosition: joy1InputPosY.value,
+                            direction: joy1Direzione.value,
+                            x: joy1X.value,
+                            y: joy1Y.value
+                        },
+                        joy2: {
+                            xPosition: joy2IinputPosX.value,
+                            yPosition: joy2InputPosY.value,
+                            direction: joy2Direzione.value,
+                            x: joy2X.value,
+                            y: joy2Y.value
+                        }
+                    }));
+                }
+
+                lastJoy1Y = currentJoy1Y;
+                lastJoy2Y = currentJoy2Y;
             }
         }
 
-        setInterval(sendJoystickData, 100);
+        setInterval(sendJoystickData, 50);
     </script>
-
 </body>
 </html>

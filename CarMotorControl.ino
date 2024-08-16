@@ -174,7 +174,8 @@ void loop() {
         Serial.printf("Joystick 1: xPos=%d, yPos=%d, x=%d, y=%d, direction=%s\n", xPos1, yPos1, x1, y1, dir1.c_str());
         Serial.printf("Joystick 2: xPos=%d, yPos=%d, x=%d, y=%d, direction=%s\n", xPos2, yPos2, x2, y2, dir2.c_str());
 
-        String command = dir2 + String(y2);
+        String command = dir2 + String(map(y2, 0, 100, 0, 255));
+
         Serial.println("command: " + command);
         mapper.processCommand(command.c_str());
 

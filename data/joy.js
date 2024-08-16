@@ -260,50 +260,23 @@ var JoyStick = (function(container, parameters, callback)
         callback(StickStatus);
     }
 
-    function getCardinalDirection()
-    {
+    function getCardinalDirection() {
         let result = "";
-        let orizontal = movedX - centerX;
         let vertical = movedY - centerY;
-        
-        if(vertical >= directionVerticalLimitNeg && vertical <= directionVerticalLimitPos)
-        {
+
+        if (vertical === 0) {
             result = "C";
         }
-        if(vertical < directionVerticalLimitNeg)
-        {
-            result = "N";
+        else if (vertical < directionVerticalLimitNeg) {
+            result = "F"; // N changed to F
         }
-        if(vertical > directionVerticalLimitPos)
-        {
-            result = "S";
+        else if (vertical > directionVerticalLimitPos) {
+            result = "R"; // S changed to R
         }
-        
-        if(orizontal < directionHorizontalLimitNeg)
-        {
-            if(result === "C")
-            { 
-                result = "W";
-            }
-            else
-            {
-                result += "W";
-            }
-        }
-        if(orizontal > directionHorizontalLimitPos)
-        {
-            if(result === "C")
-            { 
-                result = "E";
-            }
-            else
-            {
-                result += "E";
-            }
-        }
-        
+
         return result;
     }
+
 
     /******************************************************
      * Public methods
